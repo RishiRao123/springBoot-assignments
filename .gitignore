@@ -1,0 +1,27 @@
+# ======================
+# Maven
+# ======================
+target/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Environment
+.env
+.env.*
+
+# Spring local configs
+application-local.properties
+application-dev.properties
