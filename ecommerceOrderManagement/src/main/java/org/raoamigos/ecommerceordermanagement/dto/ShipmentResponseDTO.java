@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ShipmentResponseDto {
+public class ShipmentResponseDTO {
 
     private Long id;
     private String trackingNumber;
