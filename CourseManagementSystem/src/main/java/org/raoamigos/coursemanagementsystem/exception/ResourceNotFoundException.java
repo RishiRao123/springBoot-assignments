@@ -1,5 +1,12 @@
 package org.raoamigos.coursemanagementsystem.exception;
 
-public class ResourceNotFoundException {
+public class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(String resourceName,
+                                     String fieldName,
+                                     Object fieldValue) {
+        super(resourceName + " not found with "
+                + fieldName + " : " + fieldValue);
+    }
 
 }
