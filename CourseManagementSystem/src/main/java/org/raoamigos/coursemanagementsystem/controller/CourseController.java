@@ -6,6 +6,7 @@ import org.raoamigos.coursemanagementsystem.dto.CourseRequestDTO;
 import org.raoamigos.coursemanagementsystem.dto.CourseResponseDTO;
 import org.raoamigos.coursemanagementsystem.payload.ApiResponse;
 import org.raoamigos.coursemanagementsystem.service.CourseService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +37,18 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<CourseResponseDTO>>> getAllCourses() {
-        List<CourseResponseDTO> courses = courseService.getAllCourses();
-        ApiResponse<List<CourseResponseDTO>> response =
-                new ApiResponse<>(true, "Courses fetched successfully", courses);
+    public ResponseEntity<ApiResponse<Page<CourseResponseDTO>>> getAllCourses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Page<CourseResponseDTO> courses = courseService.getAllCourses(page, size, sortBy);
+
+        ApiResponse<Page<CourseResponseDTO>> response = new ApiResponse<>(true,
+                        "Courses fetched successfully",
+                        courses);
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")

@@ -1,16 +1,15 @@
 package org.raoamigos.coursemanagementsystem.service;
 
-
+import org.springframework.data.domain.Page;
 import org.raoamigos.coursemanagementsystem.dto.CourseRequestDTO;
 import org.raoamigos.coursemanagementsystem.dto.CourseResponseDTO;
 
-import java.util.List;
 
 public interface CourseService {
 
     CourseResponseDTO createCourse(CourseRequestDTO dto);
 
-    List<CourseResponseDTO> getAllCourses();
+    Page<CourseResponseDTO> getAllCourses(int page, int size, String sortBy);
 
     CourseResponseDTO getCourseById(Long id);
 

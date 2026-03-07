@@ -8,6 +8,10 @@ import org.raoamigos.coursemanagementsystem.entity.Course;
 import org.raoamigos.coursemanagementsystem.exception.ResourceNotFoundException;
 import org.raoamigos.coursemanagementsystem.repository.CourseRepository;
 import org.raoamigos.coursemanagementsystem.service.CourseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,10 +37,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseResponseDTO> getAllCourses() {
-        return courseRepository.findAll().stream()
-                .map(c -> modelMapper.map(c, CourseResponseDTO.class))
-                .collect(Collectors.toList());
+    public Page<CourseResponseDTO> getAllCourses(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<Course> coursePage = courseRepository.findAll(pageable);
+
+        return coursePage.map(course -> modelMapper.map(course, CourseResponseDTO.class));
     }
 
     @Override
