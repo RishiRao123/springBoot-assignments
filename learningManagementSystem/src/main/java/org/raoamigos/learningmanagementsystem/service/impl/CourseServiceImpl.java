@@ -1,5 +1,6 @@
 package org.raoamigos.learningmanagementsystem.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.raoamigos.learningmanagementsystem.dto.CourseRequestDTO;
 import org.raoamigos.learningmanagementsystem.dto.CourseResponseDTO;
@@ -16,24 +17,25 @@ import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
     private final ModelMapper modelMapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository, ModelMapper modelMapper, InstructorRepository instructorRepository) {
-        this.courseRepository = courseRepository;
-        this.instructorRepository = instructorRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public CourseResponseDTO createCourse(CourseRequestDTO dto) {
+
         Instructor instructor = instructorRepository.findById(dto.getInstructorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", dto.getInstructorId()));
 
-        Course course = modelMapper.map(dto, Course.class);
+        Course course = new Course();
+        course.setTitle(dto.getTitle());
+        course.setDescription(dto.getDescription());
+        course.setDuration(dto.getDuration());
+        course.setPrice(dto.getPrice());
         course.setInstructor(instructor);
 
         Course savedCourse = courseRepository.save(course);
@@ -82,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
         Course updatedCourse = courseRepository.save(course);
 
         CourseResponseDTO response = modelMapper.map(updatedCourse, CourseResponseDTO.class);
-        response.setTitle(updatedCourse.getInstructor().getName());
+        response.setInstructorName(updatedCourse.getInstructor().getName());
 
         return response;
     }
