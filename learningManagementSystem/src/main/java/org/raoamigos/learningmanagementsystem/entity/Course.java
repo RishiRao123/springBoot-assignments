@@ -1,6 +1,7 @@
 package org.raoamigos.learningmanagementsystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,5 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
 }

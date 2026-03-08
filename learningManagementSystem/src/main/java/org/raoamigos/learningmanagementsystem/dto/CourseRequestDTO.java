@@ -16,6 +16,9 @@ public class CourseRequestDTO {
     @NotBlank(message = "Title cannot be empty")
     private String title;
 
+    @NotBlank(message = "Description cannot be empty")
+    private String description;
+
     @Min(value = 1, message = "Duration should be greater than 1")
     private int duration;
 
